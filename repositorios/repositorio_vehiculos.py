@@ -31,16 +31,22 @@ class RepositorioVehiculos:
             ),
         )
 
-    def obtener_por_id(self, vehiculo_id: int) -> Vehiculo | None:
-        """Busca un vehículo por su identificador."""
-        fila = self._base_datos.consultar_uno(
-            """
+    def obtener_por_id(
+        self, vehiculo_id: int, *, for_update: bool = False
+    ) -> Vehiculo | None:
+        """Busca un vehículo por su identificador.
+
+        Con ``for_update=True`` bloquea la fila hasta el fin de la transacción.
+        """
+        sql = """
             SELECT id, patente, marca, modelo, anio, categoria, tarifa_diaria, estado
             FROM vehiculos
             WHERE id = %s
-            """,
-            (vehiculo_id,),
-        )
+        """
+        if for_update:
+            sql += " FOR UPDATE"
+
+        fila = self._base_datos.consultar_uno(sql, (vehiculo_id,))
         return self._desde_fila(fila) if fila is not None else None
 
     def obtener_por_patente(self, patente: str) -> Vehiculo | None:
