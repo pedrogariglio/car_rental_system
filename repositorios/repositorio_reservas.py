@@ -93,10 +93,12 @@ class RepositorioReservas:
         fecha_hora_retiro: datetime,
         fecha_hora_devolucion: datetime,
         excluir_reserva_id: int | None = None,
+        *,
+        for_update: bool = True,
     ) -> list[Reserva]:
         """Busca reservas confirmadas que se solapen con el intervalo dado.
 
-        Bloquea las filas encontradas hasta el fin de la transacción.
+        Por defecto bloquea las filas hasta el fin de la transacción.
         """
         condiciones = [
             "vehiculo_id = %s",
@@ -121,8 +123,9 @@ class RepositorioReservas:
                    importe_estimado, estado, fecha_creacion
             FROM reservas
             WHERE {condiciones}
-            FOR UPDATE
         """.format(condiciones=" AND ".join(condiciones))
+        if for_update:
+            sql += " FOR UPDATE"
 
         filas = self._base_datos.consultar_todos(sql, parametros)
         return [self._desde_fila(fila) for fila in filas]

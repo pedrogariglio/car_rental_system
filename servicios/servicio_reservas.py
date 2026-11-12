@@ -127,16 +127,17 @@ class ServicioReservas:
         validar_campos_permitidos(cambios, self.CAMPOS_ACTUALIZABLES)
 
         with self._base_datos.transaccion():
-            actual = self._obtener_o_error(reserva_id, for_update=True)
-            self._verificar_reserva_modificable(actual)
-
+            referencia = self._obtener_o_error(reserva_id)
             vehiculo = self._vehiculos.obtener_por_id(
-                actual.vehiculo_id, for_update=True
+                referencia.vehiculo_id, for_update=True
             )
             if vehiculo is None:
                 raise ErrorNoEncontrado(
-                    f"No existe un vehículo con id {actual.vehiculo_id}."
+                    f"No existe un vehículo con id {referencia.vehiculo_id}."
                 )
+
+            actual = self._obtener_o_error(reserva_id, for_update=True)
+            self._verificar_reserva_modificable(actual)
 
             retiro = cambios.get(
                 "fecha_hora_retiro_prevista",
@@ -171,6 +172,11 @@ class ServicioReservas:
     def cancelar(self, reserva_id: int) -> Reserva:
         """Cancela una reserva confirmada que no tenga alquiler asociado."""
         with self._base_datos.transaccion():
+            referencia = self._obtener_o_error(reserva_id)
+            self._vehiculos.obtener_por_id(
+                referencia.vehiculo_id, for_update=True
+            )
+
             actual = self._obtener_o_error(reserva_id, for_update=True)
 
             if actual.estado is not EstadoReserva.CONFIRMADA:
@@ -206,7 +212,10 @@ class ServicioReservas:
 
             try:
                 self._verificar_disponibilidad(
-                    vehiculo, fecha_hora_retiro, fecha_hora_devolucion
+                    vehiculo,
+                    fecha_hora_retiro,
+                    fecha_hora_devolucion,
+                    for_update=False,
                 )
             except ErrorValidacion:
                 return False
@@ -219,6 +228,8 @@ class ServicioReservas:
         fecha_hora_retiro: datetime,
         fecha_hora_devolucion: datetime,
         excluir_reserva_id: int | None = None,
+        *,
+        for_update: bool = True,
     ) -> None:
         validar_rango_fechas(
             fecha_hora_retiro,
@@ -236,7 +247,9 @@ class ServicioReservas:
             )
 
         if self._alquileres.existe_en_curso_solapado(
-            vehiculo.id, fecha_hora_devolucion
+            vehiculo.id,
+            fecha_hora_devolucion,
+            for_update=for_update,
         ):
             raise ErrorValidacion(
                 "El vehículo tiene un alquiler en curso en el período solicitado."
@@ -247,6 +260,7 @@ class ServicioReservas:
             fecha_hora_retiro,
             fecha_hora_devolucion,
             excluir_reserva_id=excluir_reserva_id,
+            for_update=for_update,
         ):
             raise ErrorValidacion(self.MENSAJE_NO_DISPONIBLE)
 
