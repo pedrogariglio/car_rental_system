@@ -201,8 +201,13 @@ class ServicioReservas:
         vehiculo_id: int,
         fecha_hora_retiro: datetime,
         fecha_hora_devolucion: datetime,
+        excluir_reserva_id: int | None = None,
     ) -> bool:
-        """Indica si el vehículo está disponible para el intervalo solicitado."""
+        """Indica si el vehículo está disponible para el intervalo solicitado.
+
+        ``excluir_reserva_id`` permite verificar la disponibilidad al modificar
+        una reserva sin que ella misma cuente como solapamiento.
+        """
         with self._base_datos.transaccion():
             vehiculo = self._vehiculos.obtener_por_id(vehiculo_id)
             if vehiculo is None:
@@ -215,6 +220,7 @@ class ServicioReservas:
                     vehiculo,
                     fecha_hora_retiro,
                     fecha_hora_devolucion,
+                    excluir_reserva_id=excluir_reserva_id,
                     for_update=False,
                 )
             except ErrorValidacion:

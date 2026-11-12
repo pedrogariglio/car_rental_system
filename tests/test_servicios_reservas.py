@@ -305,6 +305,20 @@ def test_d10_permite_nueva_reserva_que_termina_al_iniciar_la_existente(
     assert nueva.id is not None
 
 
+def test_disponibilidad_puede_excluir_la_propia_reserva(entorno) -> None:
+    reserva = _reservar(entorno, INICIO, INICIO + timedelta(hours=24))
+
+    assert (
+        entorno.servicio_reservas.consultar_disponibilidad(
+            entorno.vehiculo.id,
+            INICIO,
+            INICIO + timedelta(hours=24),
+            excluir_reserva_id=reserva.id,
+        )
+        is True
+    )
+
+
 def test_v01_rechaza_rango_invalido(entorno) -> None:
     with pytest.raises(ErrorValidacion):
         _reservar(entorno, INICIO, INICIO)
