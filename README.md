@@ -5,10 +5,10 @@ integrador de Programación en Python.
 
 ## Estado del proyecto
 
-**Fase 4 completada**: estructura, documentación, dominio, facturación,
-persistencia MySQL, CRUD de vehículos y clientes, y gestión de reservas con
-control de disponibilidad, con 71 pruebas automatizadas en verde. Los flujos de
-alquileres, devoluciones y la interfaz gráfica todavía no están implementados.
+**Fase 5 completada**: núcleo funcional del MVP, incluyendo vehículos, clientes,
+reservas, disponibilidad, inicio de alquileres, devoluciones y cálculo del
+importe final, con 82 pruebas automatizadas en verde. La interfaz gráfica,
+reportes y API externa todavía no están implementados.
 
 ## Alcance
 

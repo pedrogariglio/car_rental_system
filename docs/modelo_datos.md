@@ -96,6 +96,8 @@ Restricciones:
 6. Un vehículo en estado `baja` o `mantenimiento` no puede reservarse ni
    alquilarse.
 7. La tarifa usada para facturar es siempre `reservas.tarifa_diaria_acordada`.
+8. Al iniciar un alquiler, el vehículo pasa a `alquilado`. Al cerrarlo, vuelve a
+   `disponible` y la reserva asociada pasa a `completada`.
 
 ## 4. Estrategia de concurrencia
 

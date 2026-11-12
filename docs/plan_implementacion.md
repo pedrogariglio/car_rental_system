@@ -98,15 +98,28 @@ importe estimado; control transaccional de solapamientos.
 integración). Se comprobó el rechazo de solapamientos, la cancelación, el bloqueo
 por alquiler en curso, los extremos contiguos y el rollback ante fallos.
 
-## Fase 5 — Alquileres y devoluciones
+## Fase 5 — Alquileres y devoluciones (completada)
 
 **Depende de:** Fase 4.
 
 **Alcance:** inicio de alquiler desde reserva, cierre con devolución, cálculo y
 persistencia del desglose económico.
 
-**Aceptación:** casos V-05 a V-08 y V-10 en verde; como máximo un alquiler por
-reserva; cierre transaccional coherente.
+**Entregables:**
+
+- Repositorio completo de alquileres: alta, consulta, listado y actualización de
+  cierre.
+- Servicio de alquileres con inicio transaccional, cierre, devolución anticipada,
+  puntual y tardía.
+- Actualización coordinada de estados: vehículo `alquilado`/`disponible` y reserva
+  `completada`.
+- Orden de bloqueos unificado (vehículo → reserva → alquiler) para reducir
+  deadlocks.
+- Pruebas V-05, V-06, V-07, V-10, tarifa congelada, recargos y rollback.
+
+**Verificación:** ejecución contra MySQL 8.4 → **82 passed** (39 unitarias y 43 de
+integración). Se comprobó el cierre puntual, anticipado y tardío, el desglose
+persistido y la liberación del vehículo.
 
 ## Fase 6 — Historial, reportes y exportación
 
