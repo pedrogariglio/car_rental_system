@@ -88,3 +88,15 @@ exactamente cuando comienza el siguiente, si no hay solapamiento estricto.
 español. Bibliotecas, módulos de terceros y APIs conservan su nombre original.
 
 **Consecuencias:** coherencia con la consigna y con el modelo de datos.
+
+## ADR-011 — GUI mínima de una sola ventana con pestañas
+
+**Contexto:** el MVP necesita una interfaz demostrable sin ampliar demasiado el
+alcance ni duplicar lógica de negocio.
+
+**Decisión:** usar una única ventana con cuatro pestañas (Vehículos, Clientes,
+Reservas, Alquileres). Las vistas solo llaman a los servicios y no contienen
+reglas de negocio.
+
+**Consecuencias:** navegación simple y menos código de infraestructura. Los
+reportes y la API externa quedan fuera de esta versión y se agregarán después.

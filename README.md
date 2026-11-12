@@ -5,10 +5,10 @@ integrador de Programación en Python.
 
 ## Estado del proyecto
 
-**Fase 5 completada**: núcleo funcional del MVP, incluyendo vehículos, clientes,
-reservas, disponibilidad, inicio de alquileres, devoluciones y cálculo del
-importe final, con 82 pruebas automatizadas en verde. La interfaz gráfica,
-reportes y API externa todavía no están implementados.
+**Fase 7 completada (GUI mínima)**: el MVP ya es demostrable desde la interfaz
+gráfica. Incluye administración de vehículos y clientes, reservas, disponibilidad,
+inicio de alquileres y devoluciones, con 83 pruebas automatizadas en verde.
+Reportes y API externa todavía no están implementados.
 
 ## Alcance
 
@@ -70,14 +70,21 @@ python -m pytest -q -m "not integracion"
 
 ## Ejecución
 
-La aplicación todavía no es ejecutable: `main.py` se incorporará en una fase
-posterior.
+Con MySQL iniciado y el `.env` configurado:
+
+```bash
+source venv/bin/activate
+python main.py
+```
+
+La aplicación abre una ventana con cuatro pestañas: Vehículos, Clientes, Reservas
+y Alquileres.
 
 ## Estructura
 
 ```
 car_rental_system/
-├── main.py                 # (pendiente) punto de entrada
+├── main.py                 # punto de entrada
 ├── config.py               # lectura de configuración y .env
 ├── db.py                   # conexión MySQL y transacciones
 ├── modelos/                # entidades del dominio

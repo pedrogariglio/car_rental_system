@@ -125,19 +125,35 @@ persistido y la liberación del vehículo.
 
 **Depende de:** Fase 5.
 
+**Estado:** pendiente. Para acelerar el MVP se adelantó la Fase 7 (GUI).
+
 **Alcance:** consultas de historial, reportes y exportación a archivos de texto.
 
 **Aceptación:** filtros por cliente, vehículo y fechas; archivo exportado
 verificable; montos formateados con `Decimal`.
 
-## Fase 7 — Interfaz gráfica
+## Fase 7 — Interfaz gráfica (completada, versión mínima)
 
-**Depende de:** Fases 3 a 6.
+**Depende de:** Fases 3 a 5. Los reportes de la Fase 6 quedan para después del
+MVP.
 
-**Alcance:** ventanas y formularios CustomTkinter conectados a los servicios.
+**Alcance:** ventana única con pestañas CustomTkinter conectadas a los servicios.
 
-**Aceptación:** flujos completos de vehículos, clientes, reservas, alquileres,
-devoluciones y reportes; sin lógica de negocio en la UI.
+**Entregables:**
+
+- `main.py` como punto de entrada con conexión y manejo de errores de arranque.
+- Pestaña de vehículos: alta, edición, baja y reactivación.
+- Pestaña de clientes: alta, edición, baja y reactivación.
+- Pestaña de reservas: alta, modificación, cancelación y verificación de
+  disponibilidad.
+- Pestaña de alquileres: inicio desde reserva y registro de devolución con
+  desglose económico.
+- Componentes compartidos de tablas, formato y validación de entrada.
+
+**Verificación:** suite completa → **83 passed** (39 unitarias y 44 de
+integración). Smoke test de la GUI: se creó la ventana principal, se instanciaron
+las cuatro vistas y se cargaron datos sin errores. La verificación visual manual
+queda pendiente.
 
 ## Fase 8 — API externa
 
