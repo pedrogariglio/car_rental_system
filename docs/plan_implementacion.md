@@ -18,35 +18,65 @@ Trabajo incremental. Cada fase debe revisarse y verificarse antes de avanzar.
 **Verificación:** estructura y archivos revisados. No se ejecutaron pruebas
 porque todavía no existe código funcional.
 
-## Fase 1 — Dominio y facturación
+## Fase 1 — Dominio y facturación (completada)
 
 **Depende de:** Fase 0.
 
 **Alcance:** modelos de dominio, estados, validaciones puras y cálculo de
 importes en `servicios/facturacion.py`. Sin MySQL ni GUI.
 
-**Aceptación:** casos F-01 a F-14 en verde; sin `float`; la lógica de facturación
-se importa sin acceso a base de datos.
+**Entregables:**
 
-## Fase 2 — Conexión y esquema MySQL
+- Modelos `Vehiculo`, `Cliente`, `Reserva` y `Alquiler`.
+- Estados y clasificación de devoluciones del dominio.
+- Validaciones reutilizables y excepción `ErrorValidacion`.
+- Cálculo puro de bloques, importe estimado y facturación de devoluciones.
+- Pruebas F-01 a F-14 y validaciones básicas de los modelos.
+
+**Verificación:** `venv/bin/python -m pytest -q` → **35 passed**. No se usa
+`float` para importes y `servicios/facturacion.py` no importa `db` ni `interfaz`.
+
+## Fase 2 — Conexión y esquema MySQL (completada)
 
 **Depende de:** Fase 0.
 
 **Alcance:** `config.py`, `db.py` con PyMySQL, `sql/schema.sql`, transacciones y
 base de prueba.
 
-**Aceptación:** esquema creado en `DB_TEST_NAME`; conexión y rollback
-verificados; credenciales leídas desde `.env`.
+**Entregables:**
 
-## Fase 3 — Repositorios y CRUD de vehículos y clientes
+- Lectura de configuración desde `.env` y validación de variables.
+- Clase `BaseDatos` con consultas parametrizadas, commit, rollback y context
+  manager de transacción.
+- Esquema MySQL con claves foráneas, restricciones `CHECK`, índice de
+  disponibilidad y `UNIQUE (reserva_id)`.
+- Pruebas de configuración y pruebas de integración de conexión, esquema, commit
+  y rollback.
+
+**Verificación:** ejecución contra MySQL 8.4 → **43 passed** (39 unitarias y 4 de
+integración). El esquema se creó en `car_rental_system_test` y el rollback se
+comprobó con una inserción descartada.
+
+## Fase 3 — Repositorios y CRUD de vehículos y clientes (completada)
 
 **Depende de:** Fases 1 y 2.
 
 **Alcance:** repositorios parametrizados y servicios de alta, consulta,
 modificación y baja lógica.
 
-**Aceptación:** CRUD funcional, validaciones V-02 y V-03, sin concatenación de SQL
-con datos de usuario.
+**Entregables:**
+
+- Repositorios de vehículos y clientes con SQL parametrizado.
+- Servicios con validaciones, transacciones, detección de duplicados y baja
+  lógica.
+- Traducción de violaciones `UNIQUE` a `ErrorDuplicado` y luego a
+  `ErrorValidacion` en los servicios.
+- Pruebas de integración de CRUD, duplicados, inexistentes y campos no
+  permitidos.
+
+**Verificación:** ejecución contra MySQL 8.4 → **54 passed** (39 unitarias y 15 de
+integración). Se comprobaron alta, consulta, modificación, baja/reactivación y
+rechazo de patentes y documentos duplicados.
 
 ## Fase 4 — Reservas y disponibilidad
 

@@ -5,8 +5,10 @@ integrador de Programación en Python.
 
 ## Estado del proyecto
 
-**Fase 0 completada**: estructura del repositorio, dependencias y documentación
-inicial. Todavía no hay lógica funcional ni pruebas automatizadas implementadas.
+**Fase 3 completada**: estructura, documentación, dominio, facturación,
+persistencia MySQL y CRUD de vehículos y clientes, con 54 pruebas automatizadas en
+verde. Los flujos de reservas, alquileres, devoluciones y la interfaz gráfica
+todavía no están implementados.
 
 ## Alcance
 
@@ -40,6 +42,32 @@ cp .env.example .env
 Completar `.env` con las credenciales locales de MySQL. El archivo `.env` no se
 versiona.
 
+## Base de datos
+
+Crear la base de desarrollo y aplicar el esquema:
+
+```bash
+mysql -u usuario -p -e "CREATE DATABASE IF NOT EXISTS car_rental_system CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+mysql -u usuario -p car_rental_system < sql/schema.sql
+```
+
+La base de pruebas se define con `DB_TEST_NAME`. Las pruebas de integración la
+crean automáticamente si el usuario de MySQL tiene permisos; en caso contrario se
+omiten.
+
+## Pruebas
+
+```bash
+source venv/bin/activate
+python -m pytest -q
+```
+
+Para ejecutar solo las pruebas que no requieren MySQL:
+
+```bash
+python -m pytest -q -m "not integracion"
+```
+
 ## Ejecución
 
 La aplicación todavía no es ejecutable: `main.py` se incorporará en una fase
@@ -50,8 +78,8 @@ posterior.
 ```
 car_rental_system/
 ├── main.py                 # (pendiente) punto de entrada
-├── config.py               # (pendiente) lectura de configuración
-├── db.py                   # (pendiente) conexión y transacciones
+├── config.py               # lectura de configuración y .env
+├── db.py                   # conexión MySQL y transacciones
 ├── modelos/                # entidades del dominio
 ├── repositorios/           # acceso a datos
 ├── servicios/              # reglas de negocio

@@ -1,7 +1,7 @@
 # Modelo de datos
 
-Documento normativo del esquema. El archivo `sql/schema.sql` se implementará en la
-Fase 2 y deberá coincidir con esta definición.
+Documento normativo del esquema. Implementado en `sql/schema.sql` durante la
+Fase 2.
 
 ## 1. Entidades y relaciones
 
@@ -80,7 +80,7 @@ Estados admitidos: `en_curso`, `finalizado`.
 Restricciones:
 
 - `UNIQUE (reserva_id)` garantiza como máximo un alquiler por reserva.
-- Al cerrar: `fecha_hora_devolucion_real >= fecha_hora_retiro_real`.
+- Al cerrar: `fecha_hora_devolucion_real > fecha_hora_retiro_real`.
 - Al cerrar: `importe_final = importe_base + recargo_demora`.
 
 ## 3. Invariantes de negocio

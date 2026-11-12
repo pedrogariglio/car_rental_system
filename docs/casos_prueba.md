@@ -1,8 +1,9 @@
 # Casos de prueba
 
-Casos acordados antes de implementar. Se automatizarán con pytest en las fases
-correspondientes. **Estado actual: pendientes de implementación; no se ejecutó
-ninguna prueba todavía.**
+Casos acordados antes de implementar. Los casos F-01 a F-14, V-02 y V-03 están
+implementados y en verde. Los casos de disponibilidad (D) y el resto de las
+validaciones/transacciones (V) quedan pendientes de las fases 4 y 5.
+**Última ejecución: 54 pruebas superadas.**
 
 Convención monetaria: `Decimal`, dos decimales, `ROUND_HALF_UP`.
 Tarifa de referencia `T = 10000.00`, salvo indicación contraria.
