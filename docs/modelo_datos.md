@@ -103,7 +103,10 @@ MySQL no ofrece exclusion constraints. La prevención de solapamientos se
 implementará en la capa de servicios mediante:
 
 - Validación dentro de una transacción.
-- `SELECT ... FOR UPDATE` sobre las reservas y alquileres del vehículo.
+- `SELECT ... FOR UPDATE` sobre la fila del vehículo como punto de serialización
+  por vehículo.
+- `SELECT ... FOR UPDATE` sobre las reservas y alquileres que participan de la
+  validación.
 - Índice compuesto para las consultas de intervalo.
 
 Limitación documentada: escrituras realizadas fuera de la aplicación no quedan

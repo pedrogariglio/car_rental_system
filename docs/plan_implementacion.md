@@ -78,15 +78,25 @@ modificación y baja lógica.
 integración). Se comprobaron alta, consulta, modificación, baja/reactivación y
 rechazo de patentes y documentos duplicados.
 
-## Fase 4 — Reservas y disponibilidad
+## Fase 4 — Reservas y disponibilidad (completada)
 
 **Depende de:** Fase 3.
 
 **Alcance:** alta, consulta, modificación y cancelación de reservas; cálculo del
 importe estimado; control transaccional de solapamientos.
 
-**Aceptación:** casos D-01 a D-10 y V-01, V-04, V-09 en verde; cancelación libera
-el intervalo.
+**Entregables:**
+
+- Repositorio de reservas con filtros y consultas `FOR UPDATE`.
+- Repositorio mínimo de alquileres para detectar alquileres en curso.
+- Servicio de reservas con disponibilidad, modificación, cancelación y cálculo
+  automático del importe estimado.
+- Bloqueo de la fila del vehículo para serializar reservas concurrentes.
+- Pruebas D-01 a D-10, V-01, V-04, V-08 y V-09, más modificación y recálculo.
+
+**Verificación:** ejecución contra MySQL 8.4 → **71 passed** (39 unitarias y 32 de
+integración). Se comprobó el rechazo de solapamientos, la cancelación, el bloqueo
+por alquiler en curso, los extremos contiguos y el rollback ante fallos.
 
 ## Fase 5 — Alquileres y devoluciones
 

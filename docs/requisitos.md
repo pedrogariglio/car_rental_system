@@ -40,6 +40,9 @@ gráfica con CustomTkinter.
 - La tarifa diaria acordada en la reserva queda congelada y no cambia si se
   modifica la tarifa vigente del vehículo.
 - Las reservas superpuestas para un mismo vehículo deben rechazarse.
+- Un cliente inactivo no puede generar reservas.
+- Si no se acuerda una tarifa especial, la reserva usa la tarifa vigente del
+  vehículo al momento de crearse.
 - Los importes se representan con `Decimal` en Python y `DECIMAL(10,2)` en MySQL.
   No se utiliza `float` para valores monetarios.
 

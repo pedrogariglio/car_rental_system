@@ -1,9 +1,8 @@
 # Casos de prueba
 
-Casos acordados antes de implementar. Los casos F-01 a F-14, V-02 y V-03 están
-implementados y en verde. Los casos de disponibilidad (D) y el resto de las
-validaciones/transacciones (V) quedan pendientes de las fases 4 y 5.
-**Última ejecución: 54 pruebas superadas.**
+Casos acordados antes de implementar. Están implementados F-01 a F-14, D-01 a
+D-10, V-01, V-02, V-03, V-04, V-08 y V-09. Quedan pendientes V-05, V-06, V-07 y
+V-10 para la Fase 5. **Última ejecución: 71 pruebas superadas.**
 
 Convención monetaria: `Decimal`, dos decimales, `ROUND_HALF_UP`.
 Tarifa de referencia `T = 10000.00`, salvo indicación contraria.
