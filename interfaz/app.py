@@ -81,7 +81,8 @@ class Aplicacion(ctk.CTk):
         for vista in self._vistas.values():
             vista.refrescar()
 
-    def _al_cambiar_pestana(self, nombre: str) -> None:
+    def _al_cambiar_pestana(self, nombre: str | None = None) -> None:
+        nombre = nombre or self._tabview.get()
         vista = self._vistas.get(nombre)
         if vista is not None:
             vista.refrescar()
